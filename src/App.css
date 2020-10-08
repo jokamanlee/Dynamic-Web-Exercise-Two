@@ -3,8 +3,9 @@
 .Header {
   align-items: center;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  margin: 0 auto;
+  margin: 0 auto 60px;
   max-width: 1080px;
   padding: 0 25px;
 }
@@ -18,14 +19,14 @@
 }
 
 .Header nav a:hover {
-  color: magenta;
+  color: orange;
 }
 
 /*--- Home Style ---*/
 .Home {
   margin: 0 auto;
   max-width: 1080px;
-  padding: 0 25px;
+  padding: 0 25px 30px;
 }
 
 .Home h2 {
@@ -36,10 +37,11 @@
 }
 
 .Home h2 span {
-  color: magenta;
+  color: orange;
 }
 
 .Label {
+  color: black;
   font-size: 16px;
   letter-spacing: 2px;
   margin: 0px;
@@ -47,6 +49,7 @@
 }
 .WeatherInfo {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
 }
 .WeatherInfo_Basic {
@@ -60,7 +63,6 @@
   border-left: none;
   display: flex;
   flex-basis: 70%;
-  border-left: none;
   padding: 30px;
 }
 .WeatherInfo_Extra_Column {
@@ -77,7 +79,7 @@
   margin-bottom: 30px;
 }
 
-.WeatherInfo-Temperature {
+.WeatherInfo_Temperature {
   font-size: 84px;
   margin: 0;
 }
@@ -85,4 +87,22 @@
   font-size: 48px;
   margin: 0;
   margin-bottom: 38px;
+}
+
+@media screen and (max-width: 640px) {
+  .Header {
+    flex-direction: column;
+  }
+
+  .Header nav a {
+    font-size: 14px;
+  }
+  .WeatherInfo {
+    flex-direction: column;
+  }
+  .WeatherInfo_Extra {
+    border: 2px solid black;
+    border-top: none;
+    flex-direction: column;
+  }
 }

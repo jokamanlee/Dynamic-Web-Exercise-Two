@@ -15,7 +15,7 @@ function Home() {
   useEffect(() => {
     axios
       .get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weatherKey}`
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${weatherKey}`
       )
       .then(function (response) {
         const weather = response.data;
@@ -38,6 +38,7 @@ function Home() {
 
   const {
     cloudiness,
+    cloudinessValue,
     currentTemp,
     highTemp,
     humididty,
@@ -46,6 +47,7 @@ function Home() {
     windSpeed,
   } = useMemo(() => {
     let cloudiness = "";
+    let cloudinessValue = 0;
     let currentTemp = "";
     let highTemp = "";
     let humididty = "";
@@ -55,16 +57,18 @@ function Home() {
 
     if (weatherData) {
       cloudiness = `${weatherData.clouds.all}%`;
-      currentTemp = weatherData.main.temp;
-      highTemp = weatherData.main.temp_max;
+      cloudinessValue = weatherData.clouds.all;
+      currentTemp = `${Math.round(weatherData.main.temp)}°`;
+      highTemp = `${Math.round(weatherData.main.temp_max)}°`;
       humididty = `${weatherData.main.humidity}%`;
-      lowTemp = weatherData.main.temp_min;
-      weatherType = weatherData.weather[0].description;
-      windSpeed = `${weatherData.wind.speed} km/h`;
+      lowTemp = `${Math.round(weatherData.main.temp_min)}°`;
+      weatherType = `${weatherData.weather[0].description}`;
+      windSpeed = `${weatherData.wind.speed} mp/h`;
     }
 
     return {
       cloudiness,
+      cloudinessValue,
       currentTemp,
       highTemp,
       humididty,
@@ -84,7 +88,10 @@ function Home() {
           Weather in <span>{city}</span>
         </h2>
         <div className="WeatherInfo">
-          <div className="WeatherInfo_Basic">
+          <div
+            className="WeatherInfo_Basic"
+            style={{ backgroundColor: `rgba(0,0,0,${cloudinessValue / 200})` }}
+          >
             <div className="WeatherInfo_Image">
               <WeatherImage weatherType={weatherType} />
             </div>
@@ -104,7 +111,7 @@ function Home() {
               <p className="WeatherInfo_Temperature_Small">{cloudiness}</p>
               <h3 className="Label">Humidity:</h3>
               <p className="WeatherInfo_Temperature_Small">{humididty}</p>
-              <h3 className="Label">Weind Speed:</h3>
+              <h3 className="Label">Wind Speed:</h3>
               <p className="WeatherInfo_Temperature_Small"> {windSpeed}</p>
             </div>
           </div>
