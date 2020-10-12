@@ -17,6 +17,7 @@ function WeatherImage({ weatherType }) {
       return <FontAwesomeIcon icon={faSun} />;
     case "light rain":
     case "moderate rain":
+    case "shower rain":
       return <FontAwesomeIcon icon={faCloudRain} />;
     case "overcast clouds":
       return <FontAwesomeIcon icon={faSmog} />;

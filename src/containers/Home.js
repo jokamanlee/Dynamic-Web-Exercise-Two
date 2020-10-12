@@ -77,8 +77,18 @@ function Home() {
       windSpeed,
     };
   }, [weatherData]);
-
-  console.log("weatherData", weatherData);
+  const color = useMemo(() => {
+    switch (true) {
+      case weatherType == "clear sky":
+        return "rgb(255,228,51)";
+      case weatherType == "light rain":
+      case weatherType == "moderate rain":
+      case weatherType == "shower rain":
+        return "blue";
+      default:
+        return "black";
+    }
+  }, [weatherType]);
 
   return (
     <>
@@ -95,11 +105,15 @@ function Home() {
             <div className="WeatherInfo_Image">
               <WeatherImage weatherType={weatherType} />
             </div>
-            <p className="WeatherInfo_Type">{weatherType} </p>
+            <p className="WeatherInfo_Type" style={{ color: color }}>
+              {weatherType}
+            </p>
             <h3 className="Label">Current Temperature:</h3>
-            <p className="WeatherInfo_Temperature">{currentTemp}</p>
+            <p className="WeatherInfo_Temperature" style={{ color: color }}>
+              {currentTemp}
+            </p>
           </div>
-          <div className="WeatherInfo_Extra">
+          <div className="WeatherInfo_Extra" style={{ color: color }}>
             <div className="WeatherInfo_Extra_Column">
               <h3 className="Label">High Temperature:</h3>
               <p className="WeatherInfo_Temperature_Small">{highTemp}</p>
